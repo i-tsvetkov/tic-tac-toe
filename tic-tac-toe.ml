@@ -64,13 +64,14 @@ let is_draw b plr =
 let minimum l = List.hd @@ List.sort l;;
 let maximum l = List.hd @@ List.rev @@ List.sort l;;
 
-let rec get_score plr plr_to_move b =
+let rec get_score plr_to_move b =
+  let plr = Me in
   if is_win b plr then Win
   else if is_lose b plr then Lose
   else if is_draw b plr then Draw
   else
     let bs = get_boards b @@ get_symbol plr_to_move in
-    let scores = List.map (get_score plr @@ get_opponent plr_to_move) bs in
+    let scores = List.map (get_score @@ get_opponent plr_to_move) bs in
     if plr_to_move = plr then maximum scores
     else minimum scores;;
 
@@ -92,9 +93,9 @@ let print_board [a1; a2; a3;
   Printf.printf "+---+---+---+\n";;
 
 let best_move b plr =
-  let scores = List.map (fun b -> (get_score plr (get_opponent plr) b, b))
+  let scores = List.map (fun b -> (get_score (get_opponent plr) b, b))
                     (get_boards b @@ get_symbol plr) in
-  let m = fst @@ maximum scores in
+  let m = fst @@ if plr = Me then maximum scores else minimum scores in
   List.assoc m scores;;
 
 let rec play b plr =
