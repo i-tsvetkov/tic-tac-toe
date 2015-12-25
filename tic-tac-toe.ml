@@ -105,7 +105,21 @@ let rec play b plr =
     let nb = best_move b plr in
     play nb @@ get_opponent plr;;
 
-play [Empty; Empty; Empty;
-      Empty; Empty; Empty;
-      Empty; Empty; Empty] Me;
+let rec play_with_me b plr first =
+  print_board b;
+  if not (List.mem Empty b) then ()
+  else if first then
+    let b1 = make_move b (get_symbol @@ get_opponent plr) @@ read_int () in
+    print_board b1;
+    let b2 = best_move b1 plr in
+    play_with_me b2 plr first
+  else
+    let b1 = best_move b plr in
+    print_board b1;
+    let b2 = make_move b1 (get_symbol @@ get_opponent plr) @@ read_int () in
+    play_with_me b2 plr first;;
+
+play_with_me [Empty; Empty; Empty;
+              Empty; Empty; Empty;
+              Empty; Empty; Empty] Me false;;
 
