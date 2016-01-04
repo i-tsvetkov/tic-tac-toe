@@ -86,13 +86,13 @@ let string_of_cell c =
 let print_board [a1; a2; a3;
                  b1; b2; b3;
                  c1; c2; c3] =
-  Printf.printf "+---+---+---+\n";
-  Printf.printf "| %s | %s | %s |\n" (string_of_cell a1) (string_of_cell a2) (string_of_cell a3);
-  Printf.printf "+---+---+---+\n";
-  Printf.printf "| %s | %s | %s |\n" (string_of_cell b1) (string_of_cell b2) (string_of_cell b3);
-  Printf.printf "+---+---+---+\n";
-  Printf.printf "| %s | %s | %s |\n" (string_of_cell c1) (string_of_cell c2) (string_of_cell c3);
-  Printf.printf "+---+---+---+\n";;
+  Printf.printf "┌───┬───┬───┐\n";
+  Printf.printf "│ %s │ %s │ %s │\n" (string_of_cell a1) (string_of_cell a2) (string_of_cell a3);
+  Printf.printf "├───┼───┼───┤\n";
+  Printf.printf "│ %s │ %s │ %s │\n" (string_of_cell b1) (string_of_cell b2) (string_of_cell b3);
+  Printf.printf "├───┼───┼───┤\n";
+  Printf.printf "│ %s │ %s │ %s │\n" (string_of_cell c1) (string_of_cell c2) (string_of_cell c3);
+  Printf.printf "└───┴───┴───┘\n";;
 
 let best_move b plr =
   let scores = List.map (fun b -> (get_score (get_opponent plr) b, b))
