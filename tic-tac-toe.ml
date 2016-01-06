@@ -79,8 +79,8 @@ let rec get_score plr_to_move b =
 
 let string_of_cell c =
   match c with
-  | X     -> "X"
-  | O     -> "O"
+  | X     -> "\027[34mX\027[m"
+  | O     -> "\027[31mO\027[m"
   | Empty -> " ";;
 
 let print_board [a1; a2; a3;
