@@ -100,6 +100,8 @@ let best_move b plr =
   let m = fst @@ if plr = Me then maximum scores else minimum scores in
   List.assoc m scores;;
 
+let is_final b plr = (is_win b plr) || (is_lose b plr) || (is_draw b plr);;
+
 let rec play b plr =
   print_board b;
   if not (List.mem Empty b) then ()
@@ -109,15 +111,17 @@ let rec play b plr =
 
 let rec play_with_me b plr first =
   print_board b;
-  if not (List.mem Empty b) then ()
+  if not (List.mem Empty b) || is_final b plr then ()
   else if first then
     let b1 = make_move b (get_symbol @@ get_opponent plr) @@ read_int () in
     print_board b1;
+    if is_final b1 plr then () else
     let b2 = best_move b1 plr in
     play_with_me b2 plr first
   else
     let b1 = best_move b plr in
     print_board b1;
+    if is_final b1 plr then () else
     let b2 = make_move b1 (get_symbol @@ get_opponent plr) @@ read_int () in
     play_with_me b2 plr first;;
 
